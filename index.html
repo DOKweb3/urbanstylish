@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urban Stylish — Gear Tagged for the City</title>
+<meta name="description" content="Urban Stylish — hand-picked phone cases, chargers, audio and accessories for city life.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0F1E;
+    --bg-elev:#0F1626;
+    --card:#141C2E;
+    --line: rgba(255,255,255,0.08);
+    --blue:#3E7BFA;
+    --blue-light:#8FB2FF;
+    --cyan:#46E0C4;
+    --tag:#FF7A45;
+    --text:#E8EEFC;
+    --muted:#8B96AC;
+    --radius: 14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1100px 500px at 15% -10%, rgba(62,123,250,0.25), transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, rgba(70,224,196,0.12), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter', system-ui, sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3, .display{
+    font-family:'Space Grotesk', 'Inter', sans-serif;
+    letter-spacing:-0.02em;
+  }
+  a{color:inherit;}
+  img,svg{display:block;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter: blur(10px);
+    background: rgba(10,15,30,0.72);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1160px;margin:0 auto;}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;text-decoration:none;}
+  .logo .tag-mark{width:26px;height:26px;flex-shrink:0;}
+  .nav-links{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:14px;color:var(--muted);}
+  .nav-links a{text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{
+    background:var(--blue); color:#fff; padding:9px 18px; border-radius:999px;
+    font-size:14px; font-weight:600; text-decoration:none; white-space:nowrap;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.06);
+  }
+  .menu-toggle{display:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:88px 24px 60px; position:relative; overflow:hidden;}
+  .hero-inner{max-width:1160px;margin:0 auto; display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:center;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    color:var(--cyan); font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;
+    background:rgba(70,224,196,0.08); border:1px solid rgba(70,224,196,0.25);
+    padding:6px 14px; border-radius:999px; margin-bottom:22px;
+  }
+  .hero h1{font-size:52px; line-height:1.05; margin:0 0 20px; font-weight:700;}
+  .hero h1 span{color:var(--blue-light);}
+  .hero p{color:var(--muted); font-size:17px; max-width:480px; margin:0 0 30px;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--blue); color:#fff; padding:13px 26px; border-radius:999px;
+    text-decoration:none; font-weight:600; font-size:15px; transition:transform .15s, box-shadow .15s;
+    box-shadow:0 8px 24px -8px rgba(62,123,250,0.6);
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{
+    border:1px solid var(--line); color:var(--text); padding:13px 26px; border-radius:999px;
+    text-decoration:none; font-weight:600; font-size:15px;
+  }
+  .hero-tag-art{position:relative; display:flex; align-items:center; justify-content:center;}
+  .big-tag{
+    width:100%; max-width:340px; transform:rotate(8deg);
+    filter:drop-shadow(0 20px 40px rgba(0,0,0,0.45));
+  }
+
+  /* ---------- Section headings ---------- */
+  .section{padding:64px 24px;}
+  .section-head{max-width:640px; margin:0 auto 40px; text-align:center;}
+  .section-head .kicker{color:var(--tag); font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:10px;}
+  .section-head h2{font-size:32px; margin:0 0 12px;}
+  .section-head p{color:var(--muted); margin:0; font-size:15.5px;}
+
+  /* ---------- Filters ---------- */
+  .filters{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:40px;}
+  .filter-btn{
+    background:var(--bg-elev); border:1px solid var(--line); color:var(--muted);
+    padding:9px 18px; border-radius:999px; font-size:13.5px; font-weight:600; cursor:pointer;
+    transition:all .15s;
+  }
+  .filter-btn:hover{color:var(--text); border-color:rgba(255,255,255,0.2);}
+  .filter-btn.active{background:var(--blue); color:#fff; border-color:var(--blue);}
+
+  /* ---------- Product grid (tag cards) ---------- */
+  .grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:24px;}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    position:relative; overflow:hidden; transition:transform .25s ease, box-shadow .25s ease;
+    display:flex; flex-direction:column;
+  }
+  .card:hover{transform:rotate(-1.2deg) translateY(-4px); box-shadow:0 20px 40px -20px rgba(0,0,0,0.6);}
+  .card-hole{
+    position:absolute; top:14px; left:14px; width:16px; height:16px; border-radius:50%;
+    background:var(--bg); border:1px solid var(--line); z-index:2;
+  }
+  .card-badge{
+    position:absolute; top:14px; right:14px; z-index:2;
+    font-size:11px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
+    padding:5px 10px; border-radius:999px; color:#0A0F1E;
+  }
+  .badge-best{background:var(--cyan);}
+  .badge-new{background:var(--blue-light);}
+  .badge-pick{background:var(--tag); color:#fff;}
+  .card-media{
+    height:150px; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(150deg, rgba(62,123,250,0.18), rgba(70,224,196,0.08));
+    border-bottom:1px dashed var(--line);
+  }
+  .card-media svg{width:56px; height:56px;}
+  .card-body{padding:18px 20px 20px; display:flex; flex-direction:column; gap:8px; flex:1;}
+  .card-cat{font-size:11.5px; color:var(--cyan); font-weight:700; text-transform:uppercase; letter-spacing:0.05em;}
+  .card-body h3{font-size:16.5px; margin:0; font-weight:600;}
+  .card-body p{font-size:13.5px; color:var(--muted); margin:0; flex:1;}
+  .card-foot{display:flex; align-items:center; justify-content:space-between; margin-top:6px;}
+  .price{font-size:17px; font-weight:700;}
+  .price small{font-size:12px; color:var(--muted); font-weight:500; text-decoration:line-through; margin-left:6px;}
+  .view-btn{
+    background:var(--bg-elev); border:1px solid var(--line); color:var(--text);
+    font-size:13px; font-weight:600; padding:8px 14px; border-radius:8px; text-decoration:none;
+    transition:background .15s, border-color .15s;
+  }
+  .view-btn:hover{background:var(--blue); border-color:var(--blue);}
+
+  /* ---------- Newsletter ---------- */
+  .newsletter{
+    max-width:1160px; margin:0 auto 0; padding:48px 40px; border-radius:20px;
+    background:linear-gradient(135deg, rgba(62,123,250,0.14), rgba(70,224,196,0.06));
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .newsletter h3{margin:0 0 6px; font-size:22px;}
+  .newsletter p{margin:0; color:var(--muted); font-size:14.5px;}
+  .newsletter form{display:flex; gap:10px; flex-wrap:wrap;}
+  .newsletter input{
+    background:var(--bg-elev); border:1px solid var(--line); color:var(--text);
+    padding:12px 16px; border-radius:999px; font-size:14px; min-width:220px;
+  }
+  .newsletter input::placeholder{color:var(--muted);}
+
+  /* ---------- Footer ---------- */
+  footer{border-top:1px solid var(--line); padding:48px 24px 32px; margin-top:40px;}
+  .footer-inner{max-width:1160px; margin:0 auto; display:flex; flex-direction:column; gap:24px;}
+  .footer-top{display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px;}
+  .footer-brand{max-width:340px;}
+  .footer-brand .logo{margin-bottom:10px;}
+  .footer-brand p{color:var(--muted); font-size:13.5px;}
+  .footer-cols{display:flex; gap:56px; flex-wrap:wrap;}
+  .footer-col h4{font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); margin:0 0 12px;}
+  .footer-col ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px;}
+  .footer-col a{color:var(--text); text-decoration:none; font-size:14px;}
+  .footer-col a:hover{color:var(--blue-light);}
+  .disclosure{
+    font-size:12.5px; color:var(--muted); background:var(--bg-elev); border:1px solid var(--line);
+    padding:16px 18px; border-radius:12px; line-height:1.6;
+  }
+  .footer-bottom{display:flex; justify-content:space-between; color:var(--muted); font-size:12.5px; flex-wrap:wrap; gap:10px;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:860px){
+    .hero-inner{grid-template-columns:1fr; text-align:center;}
+    .hero p{margin-left:auto; margin-right:auto;}
+    .hero-ctas{justify-content:center;}
+    .hero-tag-art{order:-1;}
+    .nav-links{display:none;}
+  }
+  @media (max-width:520px){
+    .hero h1{font-size:36px;}
+    .newsletter{flex-direction:column; align-items:flex-start;}
+  }
+
+  :focus-visible{outline:2px solid var(--cyan); outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="#" class="logo">
+      <svg class="tag-mark" viewBox="0 0 24 24" fill="none"><path d="M20 12.5 12.5 20a2 2 0 0 1-2.83 0l-6.67-6.67a2 2 0 0 1-.59-1.41V5a2 2 0 0 1 2-2h6.92c.53 0 1.04.21 1.41.59l6.67 6.67a2 2 0 0 1 0 2.83Z" stroke="#46E0C4" stroke-width="1.6" stroke-linejoin="round"/><circle cx="8" cy="8" r="1.6" fill="#46E0C4"/></svg>
+      Urban Stylish
+    </a>
+    <ul class="nav-links">
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#categories">Categories</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <a href="#shop" class="nav-cta">Shop Deals</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow">● Tagged &amp; tested weekly</span>
+      <h1>Everyday tech,<br><span>tagged</span> for city life.</h1>
+      <p>Urban Stylish rounds up phone cases, chargers, audio and accessories that actually hold up — no fluff, no filler, just the gear worth your cart.</p>
+      <div class="hero-ctas">
+        <a href="#shop" class="btn-primary">Browse the picks</a>
+        <a href="#categories" class="btn-ghost">See categories</a>
+      </div>
+    </div>
+    <div class="hero-tag-art">
+      <svg class="big-tag" viewBox="0 0 300 300" fill="none">
+        <path d="M270 150 160 260a14 14 0 0 1-19.8 0L40.3 160.3A14 14 0 0 1 36 150.1V50a14 14 0 0 1 14-14h100.1c3.7 0 7.3 1.5 9.9 4.1l104 104a14 14 0 0 1 0 19.8Z" fill="#141C2E" stroke="#3E7BFA" stroke-width="2.5"/>
+        <circle cx="86" cy="86" r="14" fill="#0A0F1E" stroke="#46E0C4" stroke-width="2"/>
+        <text x="150" y="150" fill="#8FB2FF" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="700" text-anchor="middle">GEAR</text>
+        <text x="150" y="178" fill="#46E0C4" font-family="Space Grotesk, sans-serif" font-size="13" text-anchor="middle" letter-spacing="2">CITY APPROVED</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="shop">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">The Lineup</div>
+      <h2>10+ picks, tagged by type</h2>
+      <p>Filter by category or scroll the full list. Every card links out to where you can grab it.</p>
+    </div>
+
+    <div class="filters" id="categories">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="cases">Phone Cases</button>
+      <button class="filter-btn" data-filter="charging">Charging</button>
+      <button class="filter-btn" data-filter="audio">Audio</button>
+      <button class="filter-btn" data-filter="wearables">Wearables</button>
+      <button class="filter-btn" data-filter="accessories">Accessories</button>
+    </div>
+
+    <div class="grid" id="product-grid"></div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="newsletter">
+    <div>
+      <h3>Get new picks before they sell out</h3>
+      <p>One short email a week. New gear, price drops, zero spam.</p>
+    </div>
+    <form onsubmit="event.preventDefault(); this.reset(); alert('You are on the list — thanks!');">
+      <input type="email" placeholder="you@email.com" required aria-label="Email address">
+      <button type="submit" class="btn-primary" style="border:none;cursor:pointer;">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <svg class="tag-mark" viewBox="0 0 24 24" fill="none"><path d="M20 12.5 12.5 20a2 2 0 0 1-2.83 0l-6.67-6.67a2 2 0 0 1-.59-1.41V5a2 2 0 0 1 2-2h6.92c.53 0 1.04.21 1.41.59l6.67 6.67a2 2 0 0 1 0 2.83Z" stroke="#46E0C4" stroke-width="1.6" stroke-linejoin="round"/><circle cx="8" cy="8" r="1.6" fill="#46E0C4"/></svg>
+          Urban Stylish
+        </a>
+        <p>Independent picks for phone cases, chargers, audio and everyday tech accessories.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#shop">Shop</a></li>
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="disclosure">
+      <strong>Affiliate disclosure:</strong> Urban Stylish participates in affiliate programs. Some links on this site are affiliate links, meaning we may earn a commission at no extra cost to you if you make a purchase through them. We only feature products we believe are genuinely worth considering.
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Urban Stylish. All rights reserved.</span>
+      <span>Built with care for city living.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Product data: edit this array to add/remove/change products ----
+  // Replace each "link" value with your real affiliate link (Amazon Associates, etc).
+  const products = [
+    {
+      name: "AeroFlex Shock Case",
+      cat: "cases", catLabel: "Phone Cases",
+      desc: "Drop-tested to 8ft with a raised bezel to protect your screen and camera.",
+      price: "$18.99", was: "$24.99", badge: "best", badgeLabel: "Best Seller",
+      link: "#", icon: "case"
+    },
+    {
+      name: "NightGlow MagSafe Wallet",
+      cat: "cases", catLabel: "Phone Cases",
+      desc: "Magnetic card holder that snaps on and off without scratching your case.",
+      price: "$21.00", badge: "new", badgeLabel: "New",
+      link: "#", icon: "wallet"
+    },
+    {
+      name: "ClearShield Glass (2-Pack)",
+      cat: "cases", catLabel: "Phone Cases",
+      desc: "9H tempered glass with an edge-to-edge fit and bubble-free install kit.",
+      price: "$11.49", was: "$15.99",
+      link: "#", icon: "glass"
+    },
+    {
+      name: "UrbanLink 3-in-1 Cable",
+      cat: "charging", catLabel: "Charging",
+      desc: "USB-C, Lightning and Micro-USB in one braided cable that survives your bag.",
+      price: "$14.50", badge: "best", badgeLabel: "Best Seller",
+      link: "#", icon: "cable"
+    },
+    {
+      name: "FlashCore 20W Wall Charger",
+      cat: "charging", catLabel: "Charging",
+      desc: "Compact fast-charger that gets most phones to 50% in about 30 minutes.",
+      price: "$16.99",
+      link: "#", icon: "plug"
+    },
+    {
+      name: "VoltPack 10,000mAh Power Bank",
+      cat: "charging", catLabel: "Charging",
+      desc: "Pocket-sized backup power with a built-in cable so you never forget one.",
+      price: "$27.99", badge: "pick", badgeLabel: "Editor's Pick",
+      link: "#", icon: "battery"
+    },
+    {
+      name: "PulseBuds Wireless Earbuds",
+      cat: "audio", catLabel: "Audio",
+      desc: "Active noise cancelling earbuds with a 26-hour case battery life.",
+      price: "$39.99", was: "$54.99", badge: "best", badgeLabel: "Best Seller",
+      link: "#", icon: "buds"
+    },
+    {
+      name: "StreetSound Clip-On Speaker",
+      cat: "audio", catLabel: "Audio",
+      desc: "Carabiner-style speaker that clips to a bag for commutes and walks.",
+      price: "$23.00",
+      link: "#", icon: "speaker"
+    },
+    {
+      name: "OrbitBand Watch Strap",
+      cat: "wearables", catLabel: "Wearables",
+      desc: "Breathable woven strap that swaps on in seconds, no tools required.",
+      price: "$13.99", badge: "new", badgeLabel: "New",
+      link: "#", icon: "watch"
+    },
+    {
+      name: "TrailGrip Car Mount",
+      cat: "accessories", catLabel: "Accessories",
+      desc: "One-hand release vent mount that holds steady over potholes and speed bumps.",
+      price: "$15.99",
+      link: "#", icon: "mount"
+    },
+    {
+      name: "NomadStand Adjustable Stand",
+      cat: "accessories", catLabel: "Accessories",
+      desc: "Folds flat for travel, holds phone or tablet at any angle for calls or video.",
+      price: "$19.99", badge: "pick", badgeLabel: "Editor's Pick",
+      link: "#", icon: "stand"
+    },
+    {
+      name: "PocketDrive 256GB",
+      cat: "accessories", catLabel: "Accessories",
+      desc: "Keychain-sized flash drive with both USB-C and USB-A ends built in.",
+      price: "$24.99",
+      link: "#", icon: "drive"
+    }
+  ];
+
+  const icons = {
+    case: '<svg viewBox="0 0 24 24" fill="none" stroke="#8FB2FF" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="3"/><circle cx="12" cy="18.3" r="0.8" fill="#8FB2FF"/></svg>',
+    wallet: '<svg viewBox="0 0 24 24" fill="none" stroke="#8FB2FF" stroke-width="1.5"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>',
+    glass: '<svg viewBox="0 0 24 24" fill="none" stroke="#8FB2FF" stroke-width="1.5"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 3v18M16 3v18" stroke-opacity="0.4"/></svg>',
+    cable: '<svg viewBox="0 0 24 24" fill="none" stroke="#8FB2FF" stroke-width="1.5"><path d="M4 4c4 4 4 8 0 12s0 4 4 4"/><circle cx="4" cy="4" r="1.6" fill="#8FB2FF"/><circle cx="8" cy="20" r="1.6" fill="#8FB2FF"/></svg>',
+    plug: '<svg viewBox="0 0 24 24" fill="none" stroke="#8FB2FF" stroke-width="1.5"><rect x="7" y="2" width="10" height="7" rx="1.5"/><path d="M9 9v3M15 9v3M12 13v9"/></svg>',
+    battery: '<svg viewBox="0 0 24 24" fill="none" stroke="#8FB2FF" stroke-width="1.5"><rect x="2" y="7" width="17" height="10" rx="2"/><path d="M22 10v4" stroke-linecap="round"/><path d="M8 17V7" stroke-opacity="0.4"/></svg>',
+    buds: '<svg viewBox="0 0 24 24" fill="none" stroke="#8FB2FF" stroke-width="1.5"><circle cx="7" cy="8" r="3"/><circle cx="17" cy="8" r="3"/><path d="M7 11v4a3 3 0 0 0 3 3M17 11v4a3 3 0 0 1-3 3"/></svg>',
+    speaker: '<svg viewBox="0 0 24 24" fill="none" stroke="#8FB2FF" stroke-width="1.5"><rect x="6" y="3" width="12" height="18" rx="3"/><circle cx="12" cy="15" r="3"/><circle cx="12" cy="7" r="1"/></svg>',
+    watch: '<svg viewBox="0 0 24 24" fill="none" stroke="#8FB2FF" stroke-width="1.5"><rect x="7" y="8" width="10" height="8" rx="2"/><path d="M9 8V4h6v4M9 16v4h6v-4"/></svg>',
+    mount: '<svg viewBox="0 0 24 24" fill="none" stroke="#8FB2FF" stroke-width="1.5"><rect x="6" y="7" width="12" height="14" rx="2"/><path d="M9 3h6l-1 4H10z"/></svg>',
+    stand: '<svg viewBox="0 0 24 24" fill="none" stroke="#8FB2FF" stroke-width="1.5"><path d="M4 20 12 6l8 14z"/><path d="M8 20h8"/></svg>',
+    drive: '<svg viewBox="0 0 24 24" fill="none" stroke="#8FB2FF" stroke-width="1.5"><rect x="5" y="9" width="14" height="10" rx="2"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>'
+  };
+  const badgeClass = { best: 'badge-best', new: 'badge-new', pick: 'badge-pick' };
+
+  function renderProducts(filter){
+    const grid = document.getElementById('product-grid');
+    grid.innerHTML = '';
+    products
+      .filter(p => filter === 'all' || p.cat === filter)
+      .forEach(p => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-hole"></div>
+          ${p.badge ? `<span class="card-badge ${badgeClass[p.badge]}">${p.badgeLabel}</span>` : ''}
+          <div class="card-media">${icons[p.icon] || ''}</div>
+          <div class="card-body">
+            <span class="card-cat">${p.catLabel}</span>
+            <h3>${p.name}</h3>
+            <p>${p.desc}</p>
+            <div class="card-foot">
+              <span class="price">${p.price}${p.was ? `<small>${p.was}</small>` : ''}</span>
+              <a class="view-btn" href="${p.link}" target="_blank" rel="nofollow sponsored noopener">View Deal</a>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      });
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelector('.filter-btn.active').classList.remove('active');
+      btn.classList.add('active');
+      renderProducts(btn.dataset.filter);
+    });
+  });
+
+  renderProducts('all');
+</script>
+
+</body>
+</html>
